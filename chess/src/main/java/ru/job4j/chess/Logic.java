@@ -1,9 +1,7 @@
 package ru.job4j.chess;
 
-import ru.job4j.chess.firuges.Cell;
-import ru.job4j.chess.firuges.Figure;
-
-import java.util.Optional;
+import ru.job4j.chess.figures.Cell;
+import ru.job4j.chess.figures.Figure;
 
 /**
  * //TODO add comments.
@@ -20,15 +18,26 @@ public class Logic {
         this.figures[this.index++] = figure;
     }
 
-    public boolean move(Cell source, Cell dest) {
+    boolean move(Cell source, Cell dest) {
         boolean rst = false;
-        int index = this.findBy(source);
-        if (index != -1) {
-            Cell[] steps = this.figures[index].way(source, dest);
-            if (steps.length > 0 && steps[steps.length - 1].equals(dest)) {
-                rst = true;
-                this.figures[index] = this.figures[index].copy(dest);
+
+        try {
+            int index = this.findBy(source);
+            if (index == -1) {
+                throw new FigureNotFoundException("Фигура не найдена");
             }
+            Cell[] steps = this.figures[index].way(source, dest);
+            for (Cell step : steps) {
+                if (this.findBy(step) != -1) {
+                    throw new OccupiedWayException("Путь занят");
+                }
+            }
+            if (steps.length > 0 && steps[steps.length - 1].equals(dest)) {
+                this.figures[index] = this.figures[index].copy(dest);
+                rst = true;
+            }
+        } catch (Exception e) {
+            rst = false;
         }
         return rst;
     }

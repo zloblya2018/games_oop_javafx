@@ -1,4 +1,4 @@
-package ru.job4j.chess.firuges;
+package ru.job4j.chess.figures;
 
 public enum Cell {
     A1(0, 0), A2(0, 1), A3(0, 2), A4(0, 3), A5(0, 4), A6(0, 5), A7(0, 6), A8(0, 7),
@@ -16,5 +16,24 @@ public enum Cell {
     Cell(int x, int y) {
         this.x = x;
         this.y = y;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public static Cell getCellByXY(int x, int y) {
+        Cell cell = null;
+        for (Cell value : values()) {
+            if (value.x == x && value.y == y) {
+                cell = value;
+                break;
+            }
+        }
+        return cell;
     }
 }
