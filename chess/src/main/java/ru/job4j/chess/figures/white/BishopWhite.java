@@ -31,10 +31,13 @@ public class BishopWhite extends Figure {
             throw new ImpossibleMoveException("Данная фигура не может так ходить");
         }
         Cell[] steps = new Cell[size];
+        int resultX = deltaX < 0 ? 1 : -1;
+        int resultY = deltaY < 0 ? 1 : -1;
         for (int i = 0; i < size; i++) {
-            steps[i] = Cell.getCellByXY((source.getX() + (deltaX < 0 ? 1 : -1) * (i + 1)),
-                    (source.getY() + (deltaY < 0 ? 1 : -1) * (i + 1)));
+            steps[i] = Cell.getCellByXY((source.getX() + resultX * (i + 1)),
+                    (source.getY() + resultY * (i + 1)));
         }
+
         return steps;
     }
 
