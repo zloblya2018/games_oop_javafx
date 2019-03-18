@@ -18,7 +18,7 @@ public class Logic {
         this.figures[this.index++] = figure;
     }
 
-    boolean move(Cell source, Cell dest) {
+    boolean move(Cell source, Cell dest) throws FigureNotFoundException, OccupiedWayException {
         boolean rst = false;
 
         try {
